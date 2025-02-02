@@ -1,14 +1,41 @@
 const objetocontrolador = {};
 
-objetocontrolador.getnotes = (req, res) => res.json({
-    "id": 1,
-    "name": "Juan Perez",
-    "email": "juan.perez@example.com",
-    "age": 30,
-    "address": {
-      "street": "Av. Siempre Viva",
-      "city": "Springfield",
-      "zip": "12345"
-    }    })
+const notemodel = require("../models/note");
 
-    module.exports = objetocontrolador;
+objetocontrolador.getnotes = async (req, res) => {
+ const notes = await note.find();
+  res.json(notes);
+}
+ 
+
+objetocontrolador.createnotes = (req, res) => {
+
+  const { title, content, date, author } = req.body;
+    const newnote = new note({
+    title: title,
+    content: content,
+    date: date,
+    author: author
+  });
+
+  console.log(newnote);
+
+  res.json({message: 'Note is saved'});
+};
+
+objetocontrolador.getnote = (req, res) =>
+  res.json({
+    id: 1,
+  });
+
+objetocontrolador.updatenote = (req, res) =>
+  res.json({
+    id: 1,
+  });
+
+objetocontrolador.deletenote = (req, res) =>
+  res.json({
+    id: 1,
+  });
+
+module.exports = objetocontrolador;

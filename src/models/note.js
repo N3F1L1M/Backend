@@ -2,10 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const chema = new Schema(
   {
-    title: { type: String, required: True },
-    content: { type: String, required: True },
+    title: { type: String, required: true },
+    content: { type: String, required: true },
 
     author: String,
+    date: { type: Date, default: Date.now }
   },
 
   {
