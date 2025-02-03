@@ -1,6 +1,6 @@
 const objetocontrolador = {};
 
-const notemodel = require("../models/note");
+const note = require("../models/note.model");
 
 objetocontrolador.getnotes = async (req, res) => {
  const notes = await note.find();
@@ -8,7 +8,7 @@ objetocontrolador.getnotes = async (req, res) => {
 }
  
 
-objetocontrolador.createnotes = (req, res) => {
+objetocontrolador.createnotes = async (req, res) => {
 
   const { title, content, date, author } = req.body;
     const newnote = new note({
@@ -18,24 +18,38 @@ objetocontrolador.createnotes = (req, res) => {
     author: author
   });
 
-  console.log(newnote);
-
+  console.log(newnote)
+  await newnote.save();
   res.json({message: 'Note is saved'});
-};
+}
 
-objetocontrolador.getnote = (req, res) =>
-  res.json({
-    id: 1,
-  });
+// ID
 
-objetocontrolador.updatenote = (req, res) =>
-  res.json({
-    id: 1,
-  });
 
-objetocontrolador.deletenote = (req, res) =>
-  res.json({
-    id: 1,
-  });
+objetocontrolador.getnote = async (req, res) => {
+
+   const foundnote = await note.findById(req.params.id)
+
+  res.json(foundnote)
+    } 
+
+
+objetocontrolador.updatenote = async (req, res) =>{
+
+  const { title, content, date, author } = req.body;
+   await note.findOneAndUpdate({_id: req.params.id}, {
+    title: title,
+    content: content,
+    date: date,
+    author: author
+  })
+  res.json({message: "Nota actualizada"})
+}
+
+
+objetocontrolador.deletenote = async (req, res) => {
+  await note.findByIdAndDelete(req.params.id)
+  res.json({id: 1})
+    } 
 
 module.exports = objetocontrolador;
