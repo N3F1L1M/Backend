@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 console.log(process.env.MONGODB_URU);
-const URI = process.env.MONGODB_URU;
+const URI = process.env.MONGODB_URU || 1;
 
 
 
