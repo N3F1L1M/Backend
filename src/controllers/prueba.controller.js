@@ -1,11 +1,39 @@
+
 const objetocontrolador = {};
+const axios = require('axios'); // Importamos axios
+
 
 objetocontrolador.getItems = async (req, res) => {
-  // Aquí iría la lógica para manejar la solicitud de obtener todos los ítems
-  res.json({ message: "Obtener todos los ítems" });
-}
+  try {
+    // Hacer la solicitud GET a la API externa
+    const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1'); // Cambia la URL según la API que uses
+    
+    // Devolver los datos obtenidos como respuesta
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error al obtener los ítems:', error);
 
-objetocontrolador.createItem = async (req, res) => {
+    // Manejo de errores
+    if (error.response) {
+      res.status(error.response.status).json({ 
+        message: 'Error en la API externa', 
+        error: error.response.data 
+      });
+    } else if (error.request) {
+      res.status(500).json({ message: 'No hubo respuesta de la API externa' });
+    } else {
+      res.status(500).json({ message: 'Error interno', error: error.message });
+    }
+  }
+};
+
+
+
+
+
+
+
+objetocontrolador.createItem =  (req, res) => {
   // Aquí iría la lógica para manejar la solicitud de crear un nuevo ítem
   const { name, description, date, owner } = req.body;
   const newItem = {
@@ -20,12 +48,12 @@ objetocontrolador.createItem = async (req, res) => {
   res.json({ message: 'Ítem creado' });
 }
 
-objetocontrolador.getItem = async (req, res) => {
+objetocontrolador.getItem =  (req, res) => {
   // Aquí iría la lógica para manejar la solicitud de obtener un ítem específico por ID
   res.json({ message: "Obtener un ítem específico" });
 }
 
-objetocontrolador.updateItem = async (req, res) => {
+objetocontrolador.updateItem =  (req, res) => {
   // Aquí iría la lógica para manejar la solicitud de actualizar un ítem específico por ID
 
   /* const { name, description, date, owner } = req.body;
@@ -42,7 +70,7 @@ objetocontrolador.updateItem = async (req, res) => {
   res.json({ message: "Ítem actualizado" });
 }
 
-objetocontrolador.deleteItem = async (req, res) => {
+objetocontrolador.deleteItem =  (req, res) => {
   // Aquí iría la lógica para manejar la solicitud de eliminar un ítem específico por ID
   res.json({ message: "Ítem eliminado" });
 }
