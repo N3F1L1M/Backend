@@ -3,28 +3,14 @@ const objetocontrolador = {};
 const axios = require('axios'); // Importamos axios
 
 
-objetocontrolador.getItems = async (req, res) => {
+objetocontrolador.getItems = async (req, res, next) => { 
   try {
-    // Hacer la solicitud GET a la API externa
-    const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1'); // Cambia la URL según la API que uses
-    
-    // Devolver los datos obtenidos como respuesta
+    const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1'); 
     res.json(response.data);
-  } catch (error) {
-    console.error('Error al obtener los ítems:', error);
-
-    // Manejo de errores
-    if (error.response) {
-      res.status(error.response.status).json({ 
-        message: 'Error en la API externa', 
-        error: error.response.data 
-      });
-    } else if (error.request) {
-      res.status(500).json({ message: 'No hubo respuesta de la API externa' });
-    } else {
-      res.status(500).json({ message: 'Error interno', error: error.message });
-    }
-  }
+  } 
+  catch (error) { next(error);  } //pasa al middleware de errores
+     
+ 
 };
 
 
