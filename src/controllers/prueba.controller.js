@@ -27,15 +27,17 @@ objetocontrolador.getItem = async (req, res) => {
 
 objetocontrolador.updateItem = async (req, res) => {
   // Aquí iría la lógica para manejar la solicitud de actualizar un ítem específico por ID
-  const { name, description, date, owner } = req.body;
+
+  /* const { name, description, date, owner } = req.body;
   const updatedItem = {
     name: name,
     description: description,
     date: date,
     owner: owner
-  };
-
-  console.log(updatedItem);
+    
+    };*/
+    
+  console.log("updatedItem");
   // Aquí iría la lógica para actualizar el ítem
   res.json({ message: "Ítem actualizado" });
 }
