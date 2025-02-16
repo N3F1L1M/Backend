@@ -5,7 +5,7 @@ const axios = require('axios'); // Importamos axios
 
 objetocontrolador.getItems = async (req, res, next) => { 
   try {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1'); 
+    const response = await axios.get('https://jsonplaceholder.typicode.com/comments'); 
     res.json(response.data);
   } 
   catch (error) { next(error);  } //pasa al middleware de errores
